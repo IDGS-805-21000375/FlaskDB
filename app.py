@@ -44,6 +44,19 @@ def detalles():
         email=alum1.email
     return render_template("detalles.html",form=create_form,nombre=nom,apellido=ape,email=email)
  
+@app.route("/Alumno1", methods=['GET','POST'])
+def Alumnos1():
+    create_form=forms.UserForm2(request.form)
+    if request.method =='POST':
+        alum=Alumno(nombre=create_form.nombre.data,
+        apaterno=create_form.apaterno.data,
+        email=create_form.email.data)
+        
+        db.session.add(alum)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('Alumno1.html',form=create_form)
+   
 if __name__ == '__main__':
     csrf.init_app(app)
     db.init_app(app)
